@@ -1,0 +1,14 @@
+package ch02;
+
+public class Greetings {
+
+    private String format;
+
+    public String greet(String guest) {
+        return String.format(format, guest);
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+}

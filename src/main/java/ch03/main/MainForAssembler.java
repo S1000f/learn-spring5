@@ -2,6 +2,9 @@ package ch03.main;
 
 import ch03.*;
 import ch03.assembler.Assembler;
+import config.AppCtx;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,9 +12,11 @@ import java.io.InputStreamReader;
 
 public class MainForAssembler {
 
-    private static Assembler assembler = new Assembler();
+    private static ApplicationContext ctx = null;
 
     public static void main(String[] args) throws IOException {
+        ctx = new AnnotationConfigApplicationContext(AppCtx.class);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
             System.out.println("input command: ");
@@ -28,6 +33,9 @@ public class MainForAssembler {
             } else if(command.startsWith("change ")) {
                 processChangeCommand(command.split(" "));
                 continue;
+            } else if(command.equals("list")) {
+                processListCommand();
+                continue;
             }
             printHelp();
         }
@@ -40,7 +48,8 @@ public class MainForAssembler {
             return;
         }
 
-        MemberRegisterService registerService = assembler.getMemberRegisterService();
+        MemberRegisterService registerService =
+                ctx.getBean("memberRegisterService", MemberRegisterService.class);
         RegisterRequest request = new RegisterRequest();
         request.setEmail(arg[1]);
         request.setName(arg[2]);
@@ -65,7 +74,8 @@ public class MainForAssembler {
             return;
         }
 
-        ChangePasswordService changePasswordService = assembler.getChangePasswordService();
+        ChangePasswordService changePasswordService =
+                ctx.getBean("changePassword", ChangePasswordService.class);
         try {
             changePasswordService.changePassword(arg[1], arg[2], arg[3]);
             System.out.println("password changed...\n");
@@ -82,9 +92,17 @@ public class MainForAssembler {
         System.out.println("---command list---");
         System.out.println("new [email] [name] [password] [password again]");
         System.out.println("change [email] [current password] [new password]");
+        System.out.println("list");
         System.out.println("exit");
         System.out.println();
     }
+
+    private static void processListCommand() {
+        MemberListPrinter listPrinter =
+                ctx.getBean("listPrinter", MemberListPrinter.class);
+        listPrinter.printAll();
+    }
+
 }
 
 

@@ -2,6 +2,9 @@ package ch03.main;
 
 import ch03.*;
 import ch03.assembler.Assembler;
+import config.AppConf1;
+import config.AppConf2;
+import config.AppConfImport;
 import config.AppCtx;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -15,7 +18,7 @@ public class MainForAssembler {
     private static ApplicationContext ctx = null;
 
     public static void main(String[] args) throws IOException {
-        ctx = new AnnotationConfigApplicationContext(AppCtx.class);
+        ctx = new AnnotationConfigApplicationContext(AppConfImport.class);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
@@ -38,6 +41,9 @@ public class MainForAssembler {
                 continue;
             } else if(command.startsWith("info ")) {
                 processInfoCommand(command.split(" "));
+                continue;
+            }else if(command.equals("version")) {
+                processVersionCommand();
                 continue;
             }
             printHelp();
@@ -78,7 +84,7 @@ public class MainForAssembler {
         }
 
         ChangePasswordService changePasswordService =
-                ctx.getBean("changePassword", ChangePasswordService.class);
+                ctx.getBean("changePasswordService", ChangePasswordService.class);
         try {
             changePasswordService.changePassword(arg[1], arg[2], arg[3]);
             System.out.println("password changed...\n");
@@ -97,6 +103,7 @@ public class MainForAssembler {
         System.out.println("change [email] [current password] [new password]");
         System.out.println("list");
         System.out.println("info [email]");
+        System.out.println("version");
         System.out.println("exit");
         System.out.println();
     }
@@ -115,6 +122,11 @@ public class MainForAssembler {
 
         MemberInfoPrinter infoPrinter = ctx.getBean("infoPrinter", MemberInfoPrinter.class);
         infoPrinter.printMemberInfo(arg[1]);
+    }
+
+    private static void processVersionCommand() {
+        VersionPrinter versionPrinter = ctx.getBean("versionPrinter", VersionPrinter.class);
+        versionPrinter.print();
     }
 
 }

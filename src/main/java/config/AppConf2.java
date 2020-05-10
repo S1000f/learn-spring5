@@ -1,44 +1,38 @@
 package config;
 
 import ch03.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppCtx {
+public class AppConf2 {
 
-    @Bean
-    public MemberDao memberDao() {
-        return new MemberDao();
-    }
+    @Autowired
+    private MemberDao memberDao;
+    @Autowired
+    private MemberPrinter memberPrinter;
 
     @Bean
     public MemberRegisterService memberRegisterService() {
-        return new MemberRegisterService(memberDao());
+        return new MemberRegisterService(memberDao);
     }
 
     @Bean
     public ChangePasswordService changePasswordService() {
         ChangePasswordService passwordService = new ChangePasswordService();
-        passwordService.setMemberDao(memberDao());
+        passwordService.setMemberDao(memberDao);
         return passwordService;
     }
 
     @Bean
-    public MemberPrinter memberPrinter() {
-        return new MemberPrinter();
-    }
-
-    @Bean
     public MemberListPrinter listPrinter() {
-        return new MemberListPrinter(memberDao(), memberPrinter());
+        return new MemberListPrinter(memberDao, memberPrinter);
     }
 
     @Bean
     public MemberInfoPrinter infoPrinter() {
         MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
-        infoPrinter.setMemberDao(memberDao());
-        infoPrinter.setPrinter(memberPrinter());
         return infoPrinter;
     }
 

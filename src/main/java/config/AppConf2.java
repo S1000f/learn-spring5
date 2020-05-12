@@ -2,6 +2,7 @@ package config;
 
 import ch03.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,25 +16,22 @@ public class AppConf2 {
 
     @Bean
     public MemberRegisterService memberRegisterService() {
-        return new MemberRegisterService(memberDao);
+        return new MemberRegisterService();
     }
 
     @Bean
     public ChangePasswordService changePasswordService() {
-        ChangePasswordService passwordService = new ChangePasswordService();
-        passwordService.setMemberDao(memberDao);
-        return passwordService;
+        return new ChangePasswordService();
     }
 
     @Bean
     public MemberListPrinter listPrinter() {
-        return new MemberListPrinter(memberDao, memberPrinter);
+        return new MemberListPrinter();
     }
 
     @Bean
     public MemberInfoPrinter infoPrinter() {
-        MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
-        return infoPrinter;
+        return new MemberInfoPrinter();
     }
 
     @Bean

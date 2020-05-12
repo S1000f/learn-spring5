@@ -1,11 +1,7 @@
 package ch03.main;
 
 import ch03.*;
-import ch03.assembler.Assembler;
-import config.AppConf1;
-import config.AppConf2;
 import config.AppConfImport;
-import config.AppCtx;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

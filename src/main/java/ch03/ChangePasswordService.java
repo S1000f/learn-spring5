@@ -1,7 +1,10 @@
 package ch03;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class ChangePasswordService {
 
+    @Autowired
     private MemberDao memberDao;
 
     public void changePassword(String email, String oldPassword, String newPassword) {

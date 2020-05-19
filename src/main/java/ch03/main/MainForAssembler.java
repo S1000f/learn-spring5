@@ -2,6 +2,7 @@ package ch03.main;
 
 import ch03.*;
 import config.AppConfImport;
+import config.AppCtx;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -14,7 +15,7 @@ public class MainForAssembler {
     private static ApplicationContext ctx = null;
 
     public static void main(String[] args) throws IOException {
-        ctx = new AnnotationConfigApplicationContext(AppConfImport.class);
+        ctx = new AnnotationConfigApplicationContext(AppCtx.class);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
@@ -54,7 +55,7 @@ public class MainForAssembler {
         }
 
         MemberRegisterService registerService =
-                ctx.getBean("memberRegisterService", MemberRegisterService.class);
+                ctx.getBean(MemberRegisterService.class);
         RegisterRequest request = new RegisterRequest();
         request.setEmail(arg[1]);
         request.setName(arg[2]);
@@ -80,7 +81,7 @@ public class MainForAssembler {
         }
 
         ChangePasswordService changePasswordService =
-                ctx.getBean("changePasswordService", ChangePasswordService.class);
+                ctx.getBean(ChangePasswordService.class);
         try {
             changePasswordService.changePassword(arg[1], arg[2], arg[3]);
             System.out.println("password changed...\n");

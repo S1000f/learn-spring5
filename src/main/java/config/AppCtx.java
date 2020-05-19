@@ -1,10 +1,16 @@
 package config;
 
 import ch03.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 @Configuration
+@ComponentScan(basePackages = {"ch03"},
+        excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "ch03.*Dao"))
 public class AppCtx {
 
     @Bean
@@ -13,33 +19,15 @@ public class AppCtx {
     }
 
     @Bean
-    public MemberRegisterService memberRegisterService() {
-        return new MemberRegisterService(memberDao());
-    }
-
-    @Bean
-    public ChangePasswordService changePasswordService() {
-        ChangePasswordService passwordService = new ChangePasswordService();
-        passwordService.setMemberDao(memberDao());
-        return passwordService;
-    }
-
-    @Bean
-    public MemberPrinter memberPrinter() {
+    @Qualifier("printer1")
+    public MemberPrinter memberPrinter1() {
         return new MemberPrinter();
     }
 
     @Bean
-    public MemberListPrinter listPrinter() {
-        return new MemberListPrinter(memberDao(), memberPrinter());
-    }
-
-    @Bean
-    public MemberInfoPrinter infoPrinter() {
-        MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
-        infoPrinter.setMemberDao(memberDao());
-        infoPrinter.setPrinter(memberPrinter());
-        return infoPrinter;
+    @Qualifier("summaryPrinter")
+    public MemberSummaryPrinter memberPrinter2() {
+        return new MemberSummaryPrinter();
     }
 
     @Bean

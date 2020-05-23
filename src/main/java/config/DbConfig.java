@@ -17,6 +17,8 @@ public class DbConfig {
         ds.setPassword("8175");
         ds.setInitialSize(2);
         ds.setMaxActive(10);
+        ds.setTestWhileIdle(true);
+        ds.setMinEvictableIdleTimeMillis(1000*60*3); // 3 min
 
         return ds;
     }

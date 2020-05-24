@@ -1,13 +1,13 @@
 package ch03;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
+import java.sql.*;
 import java.util.List;
 
 @Component
@@ -31,17 +31,36 @@ public class MemberDao {
                 );
                 member.setId(rs.getLong("ID"));
                 return member;
-            },
-            email
+            }, email
         );
 
         return result.isEmpty() ? null : result.get(0);
     }
 
-    public void insert(Member member) {
+    public void insert(final Member member) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update((Connection con)-> {
+            PreparedStatement pstmt = con.prepareStatement(
+                    "insert into MEMBER(EMAIL, PASSWORD, NAME, REGDATE) values(?,?,?,?)",
+                    new String[] {"ID"}
+            );
+            pstmt.setString(1, member.getEmail());
+            pstmt.setString(2, member.getPassword());
+            pstmt.setString(3, member.getName());
+            pstmt.setTimestamp(4, Timestamp.valueOf(member.getRegisterDateTime()));
+
+            return pstmt;
+            }, keyHolder
+        );
+        Number keyValue = keyHolder.getKey();
+        member.setId(keyValue.longValue());
     }
 
     public void update(Member member) {
+        jdbcTemplate.update(
+                "update MEMBER set NAME = ?, PASSWORD = ? where EMAIL = ?",
+                member.getName(), member.getPassword(), member.getEmail()
+        );
     }
 
     public List<Member> selectAll() {
@@ -57,6 +76,13 @@ public class MemberDao {
                 member.setId(rs.getLong("ID"));
                 return member;
         });
+    }
+
+    public int count() {
+        Integer count = jdbcTemplate.queryForObject(
+                "select count(*) from MEMBER", Integer.class
+        );
+        return count;
     }
 
 }

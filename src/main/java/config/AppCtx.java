@@ -23,9 +23,10 @@ public class AppCtx {
         ds.setPassword("8175");
         ds.setInitialSize(2);
         ds.setMaxActive(10);
+        ds.setMaxIdle(10);
         ds.setTestWhileIdle(true);
-        ds.setMinEvictableIdleTimeMillis(1000*60*3); // 3 min
-
+        ds.setMinEvictableIdleTimeMillis(1000 * 60 * 3); // 3 min
+        ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
         return ds;
     }
 

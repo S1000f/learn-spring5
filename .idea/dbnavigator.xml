@@ -23,11 +23,16 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="12cd45b4-637b-46c6-9105-ba6828d3b59f">
+        <schema name="mysql" object-types="table, view" />
+        <schema name="spring5fs" object-types="index, constraint, table, function, dataset trigger, procedure, column, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="12cd45b4-637b-46c6-9105-ba6828d3b59f">
-      <console name="Spring5fs" type="STANDARD" schema="mysql" session="Main"><![CDATA[create user 'spring5'@'localhost' identified by '8175';
+      <console name="Spring5fs" type="STANDARD" schema="spring5fs" session="Main"><![CDATA[create user 'spring5'@'localhost' identified by '8175';
 
 create database spring5fs character set=utf8;
 
@@ -43,7 +48,9 @@ create table spring5fs.MEMBER (
 ) engine=InnoDB character set = utf8;
 
 insert into spring5fs.MEMBER (EMAIL, PASSWORD, NAME, REGDATE)
-    values ('dohp.kim@gmail.com', '8175', 'Milly', now());]]></console>
+    values ('dohp.kim@gmail.com', '8175', 'Milly', now());
+
+select * from MEMBER where NAME = 'Milly';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -51,6 +58,9 @@ insert into spring5fs.MEMBER (EMAIL, PASSWORD, NAME, REGDATE)
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="12cd45b4-637b-46c6-9105-ba6828d3b59f" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="12cd45b4-637b-46c6-9105-ba6828d3b59f" dataset="spring5fs.MEMBER" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

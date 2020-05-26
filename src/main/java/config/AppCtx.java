@@ -8,10 +8,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = {"ch03"},
         excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "ch03.*Dao"))
+@EnableTransactionManagement
 public class AppCtx {
 
     @Bean(destroyMethod = "close")
@@ -28,6 +32,14 @@ public class AppCtx {
         ds.setMinEvictableIdleTimeMillis(1000 * 60 * 3); // 3 min
         ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
         return ds;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        DataSourceTransactionManager tm = new DataSourceTransactionManager();
+        tm.setDataSource(dataSource());
+
+        return tm;
     }
 
     @Bean

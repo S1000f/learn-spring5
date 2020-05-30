@@ -23,12 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="12cd45b4-637b-46c6-9105-ba6828d3b59f">
-        <schema name="mysql" object-types="table, view" />
-        <schema name="spring5fs" object-types="index, constraint, table, function, dataset trigger, procedure, column, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="12cd45b4-637b-46c6-9105-ba6828d3b59f">

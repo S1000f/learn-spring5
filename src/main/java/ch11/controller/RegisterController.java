@@ -4,10 +4,8 @@ import ch11.DuplicateMemberException;
 import ch11.MemberRegisterService;
 import ch11.RegisterRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,10 +24,11 @@ public class RegisterController {
     }
 
     @PostMapping("/register/step2")
-    public String handlerStep2(@RequestParam(value = "agree", defaultValue = "false") Boolean agreeParam) {
+    public String handlerStep2(@RequestParam(value = "agree", defaultValue = "false") Boolean agreeParam, Model model) {
         if(!agreeParam) {
             return "register/step1";
         }
+        model.addAttribute("registerRequest", new RegisterRequest());
         return "register/step2";
     }
 

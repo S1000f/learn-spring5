@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,30 +9,29 @@
     <title>Register Member</title>
 </head>
 <body>
-    <h2>Member info
-        <form action="step3" method="POST">
-            <p>
-                <label for="">email:<br />
-                <input type="text" name="email" id="email">
-                </label>
-            </p>
-            <p>
-                <label>name:<br />
-                <input type="text" name="name" id="name">
-                </label>
-            </p>
-            <p>
-                <label>password:<br />
-                <input type="password" name="password" id="password">
-                </label>
-            </p>
-            <p>
-                <label>password confirm:<br />
-                <input type="password" name="confirmPassword" id="confirmPassword" >
-                </label>
-            </p>
-            <input type="submit" value="sign up">
-        </form>
-    </h2>
+    <h2>Member info</h2>
+    <form:form action="step3" modelAttribute="registerRequest">
+        <p>
+            <label>Email:<br />
+            <form:input path="email" />
+            </label>
+        </p>
+        <p>
+            <label>Name:<br />
+            <form:input path="name" />
+            </label>
+        </p>
+        <p>
+            <label>Password:<br />
+            <form:password path="password" />
+            </label>
+        </p>
+        <p>
+            <label>Confirm password:<br />
+            <form:password path="confirmPassword" />
+            </label>
+        </p>
+        <input type="submit" value="Sign up">
+    </form:form>
 </body>
 </html>

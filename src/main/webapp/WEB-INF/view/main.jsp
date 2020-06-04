@@ -6,11 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register success</title>
+    <title>Main</title>
 </head>
 <body>
-    <p><strong>${registerRequest.name}!</strong>&nbsp;Sign-up done successfully!
+    <p>Welcome!
     </p>
-    <p><a href="<c:url value='/main'/>">[Go to main page]</a></p>
+    <p><a href="<c:url value='/register/step1'/>">[register member]</a></p>
 </body>
 </html>

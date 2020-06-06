@@ -1,6 +1,5 @@
 package config;
 
-import ch03.MemberDao;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

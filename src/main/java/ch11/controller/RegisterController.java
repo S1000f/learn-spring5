@@ -24,11 +24,11 @@ public class RegisterController {
     }
 
     @PostMapping("/register/step2")
-    public String handlerStep2(@RequestParam(value = "agree", defaultValue = "false") Boolean agreeParam, Model model) {
+    public String handlerStep2(@RequestParam(value = "agree", defaultValue = "false") Boolean agreeParam,
+                               RegisterRequest registerRequest) {
         if(!agreeParam) {
             return "register/step1";
         }
-        model.addAttribute("registerRequest", new RegisterRequest());
         return "register/step2";
     }
 

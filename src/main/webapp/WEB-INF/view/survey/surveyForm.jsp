@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,22 +11,20 @@
 <body>
     <h2>survey</h2>
     <form action="" method="post">
+    <c:forEach var="q" items="${questions}" varStatus="status">
         <p>
-            1. What is your speciality<br />
-            <label for=""><input type="radio" name="responses[0]" value="server">Server side</label>
-            <label for=""><input type="radio" name="responses[0]" value="front">Front side</label>
-            <label for=""><input type="radio" name="responses[0]" value="fullstack">Full stack</label>
+            ${status.index + 1}. ${q.title}<br />
+            <c:if test="${q.choice}">
+                <c:forEach var="option" items="${q.options}">
+                    <label><input type="radio" name="responses[${status.index}]" value="${option}">
+                    ${option}</label>
+                </c:forEach>
+            </c:if>
+            <c:if test="${! q.choice }">
+                <input type="text" name="responses[${status.index}]">
+            </c:if>
         </p>
-        <p>
-            2. What is your favorite tool<br />
-            <label for=""><input type="radio" name="responses[1]" value="Eclipse">Eclipse</label>
-            <label for=""><input type="radio" name="responses[1]" value="Intellij">IntelliJ</label>
-            <label for=""><input type="radio" name="responses[1]" value="Sublime">Sublime Text</label>
-        </p>
-        <p>
-            3. Any comment<br />
-            <input type="text" name="responses[2]">
-        </p>
+    </c:forEach>
         <p>
             <label for="">Location:<br />
             <input type="text" name="res.location">

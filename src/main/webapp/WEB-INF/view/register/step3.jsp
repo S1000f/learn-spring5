@@ -1,16 +1,18 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register success</title>
+    <title><spring:message code="member.register" /></title>
 </head>
 <body>
-    <p><strong>${registerRequest.name}!</strong>&nbsp;Sign-up done successfully!
+    <p>
+        <spring:message code="register.done" arguments="${registerRequest.name}, ${registerRequest.email}" />
     </p>
-    <p><a href="<c:url value='/main'/>">[Go to main page]</a></p>
+    <p><a href="<c:url value='/main'/>">[<spring:message code="go.main" />]</a></p>
 </body>
 </html>

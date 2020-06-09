@@ -48,4 +48,8 @@ public class Member {
 
         this.password = newOne;
     }
+
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
+    }
 }

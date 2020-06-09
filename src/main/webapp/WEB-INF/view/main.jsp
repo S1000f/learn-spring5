@@ -9,8 +9,21 @@
     <title>Main</title>
 </head>
 <body>
-    <p>Welcome!
+    <c:if test="${empty authInfo}">
+    <p>Welcome!<br />
+    Log in or Sign up for new account</p>
+    <p>
+        <a href="<c:url value='/register/step1'/>">[register member]</a>
+        <a href="<c:url value='/login'/>">[Log in]</a>
     </p>
-    <p><a href="<c:url value='/register/step1'/>">[register member]</a></p>
+    </c:if>
+
+    <c:if test="${! empty authInfo}">
+        <p>${authInfo.name}님, 환영합니다!</p>
+        <p>
+            <a href="<c:url value='/edit/changePassword'/>">[change password]</a>
+            <a href="<c:url value='/logout'/>">[Log out]</a>
+        </p>
+    </c:if>
 </body>
 </html>

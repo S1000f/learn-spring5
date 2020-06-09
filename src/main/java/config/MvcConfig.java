@@ -1,6 +1,8 @@
 package config;
 
+import ch11.controller.ListMemberController;
 import ch11.controller.RegisterRequestValidator;
+import ch11.interceptor.AuthCheckInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +38,22 @@ public class MvcConfig implements WebMvcConfigurer {
         return ms;
     }
 
-//    // Global Validator
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authCheckInterceptor()).addPathPatterns("/edit/**");
+    }
+
+    @Bean
+    public AuthCheckInterceptor authCheckInterceptor() {
+        return new AuthCheckInterceptor();
+    }
+
+    @Bean
+    public ListMemberController listMemberController() {
+        return new ListMemberController();
+    }
+
+    //    // Global Validator
 //    @Override
 //    public Validator getValidator() {
 //        return new RegisterRequestValidator();

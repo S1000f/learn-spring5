@@ -1,18 +1,21 @@
 package config;
 
+import ch11.AuthService;
 import ch11.MemberRegisterService;
-import ch11.controller.ExampleController;
-import ch11.controller.RegisterController;
+import ch11.controller.*;
 import ch11.survey.SurveyController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Configuration
 public class ControllerConfig {
 
     @Autowired
     private MemberRegisterService memberRegisterService;
+    @Autowired
+    private AuthService authService;
 
     @Bean
     public RegisterController registerController() {
@@ -25,6 +28,23 @@ public class ControllerConfig {
     @Bean
     public SurveyController surveyController() {
         return new SurveyController();
+    }
+
+    @Bean
+    public LoginController loginController() {
+        LoginController loginController = new LoginController();
+        loginController.setAuthService(authService);
+        return loginController;
+    }
+
+    @Bean
+    public LogoutController logoutController() {
+        return new LogoutController();
+    }
+
+    @Bean
+    public ChangePwdController changePwdController() {
+        return new ChangePwdController();
     }
 
     @Bean

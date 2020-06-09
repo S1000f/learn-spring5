@@ -1,15 +1,14 @@
 package ch11;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -26,10 +25,10 @@ public class MemberDao {
             "select * from MEMBER where EMAIL = ?",
             (ResultSet rs, int rowNum)-> {
                 Member member = new Member(
-                        rs.getString("EMAIL"),
-                        rs.getString("PASSWORD"),
-                        rs.getString("NAME"),
-                        rs.getTimestamp("REGDATE").toLocalDateTime()
+                    rs.getString("EMAIL"),
+                    rs.getString("PASSWORD"),
+                    rs.getString("NAME"),
+                    rs.getTimestamp("REGDATE").toLocalDateTime()
                 );
                 member.setId(rs.getLong("ID"));
                 return member;
@@ -38,6 +37,24 @@ public class MemberDao {
 
         return result.isEmpty() ? null : result.get(0);
     }
+
+    public List<Member> selectByRegdate(LocalDateTime from, LocalDateTime to) {
+        List<Member> results = jdbcTemplate.query(
+            "select * from MEMBER where REGDATE between ? and ? order by REGDATE desc",
+            (ResultSet rs, int rowNum)-> {
+                Member member = new Member(
+                    rs.getString("EMAIL"),
+                    rs.getString("PASSWORD"),
+                    rs.getString("NAME"),
+                    rs.getTimestamp("REGDATE").toLocalDateTime()
+                );
+                member.setId(rs.getLong("ID"));
+                return member;
+            }, from, to
+        );
+        return results;
+    }
+
 
     public void insert(final Member member) {
         KeyHolder keyHolder = new GeneratedKeyHolder();

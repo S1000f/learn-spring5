@@ -1,6 +1,7 @@
 package config;
 
 import ch11.AuthService;
+import ch11.MemberDao;
 import ch11.MemberRegisterService;
 import ch11.controller.*;
 import ch11.survey.SurveyController;
@@ -16,6 +17,8 @@ public class ControllerConfig {
     private MemberRegisterService memberRegisterService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private MemberDao memberDao;
 
     @Bean
     public RegisterController registerController() {
@@ -50,5 +53,13 @@ public class ControllerConfig {
     @Bean
     public ExampleController exampleController() {
         return new ExampleController();
+    }
+
+    @Bean
+    public MemberDetailController memberDetailController() {
+        MemberDetailController controller = new MemberDetailController();
+        controller.setMemberDao(memberDao);
+
+        return controller;
     }
 }

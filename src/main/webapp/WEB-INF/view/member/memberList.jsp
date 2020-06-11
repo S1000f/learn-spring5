@@ -15,8 +15,10 @@
     <form:form modelAttribute="cmd">
         <p>
             <label for="">from: <form:input path="from" /></label>
+            <form:errors path="from" />
             ~
             <label for="">to: <form:input path="to" /></label>
+            <form:errors path="to" />
             <input type="submit" value="조회">
         </p>
     </form:form>

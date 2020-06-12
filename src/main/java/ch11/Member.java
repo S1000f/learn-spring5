@@ -13,7 +13,7 @@ public class Member {
     private String password;
     private String name;
     //@JsonFormat(shape = JsonFormat.Shape.STRING) // ISO-8601 format
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime registerDateTime;
 
     public Member(String email, String password, String name, LocalDateTime registerDateTime) {

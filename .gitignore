@@ -3,3 +3,7 @@
 /target/
 /build/
 /bin/
+/.idea/
+/.settings/
+/.project
+/.classpath

@@ -5,7 +5,6 @@ import ch11.MemberRegisterService;
 import ch11.RegisterRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +29,7 @@ public class RegisterController {
         if(!agreeParam) {
             return "register/step1";
         }
+
         return "register/step2";
     }
 

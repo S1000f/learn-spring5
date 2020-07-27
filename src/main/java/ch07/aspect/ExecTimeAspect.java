@@ -5,13 +5,15 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 
 import java.util.Arrays;
 
+@Order(1)
 @Aspect
 public class ExecTimeAspect {
 
-    @Pointcut("execution(public * ch07..*(..))")
+    @Pointcut("execution(public * ch07..*.*(..))")
     private void publicTarget() {
     }
 

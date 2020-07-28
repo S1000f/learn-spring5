@@ -1,9 +1,11 @@
 package config;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -13,13 +15,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MemberConfig {
 
+    @Value("${db.driver}")
+    private String driver;
+    @Value("${db.url}")
+    private String url;
+    @Value("${db.user}")
+    private String user;
+    @Value("${db.password}")
+    private String password;
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         DataSource ds = new DataSource();
-        ds.setDriverClassName("org.mariadb.jdbc.Driver");
-        ds.setUrl("jdbc:mariadb://localhost:3306/spring5fs?characterEncoding=utf8");
-        ds.setUsername("spring5");
-        ds.setPassword("8175");
+        ds.setDriverClassName(driver);
+        ds.setUrl(url);
+        ds.setUsername(user);
+        ds.setPassword(password);
         ds.setInitialSize(2);
         ds.setMaxActive(10);
         ds.setMaxIdle(10);
